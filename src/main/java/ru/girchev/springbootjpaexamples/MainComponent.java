@@ -3,10 +3,15 @@ package ru.girchev.springbootjpaexamples;
 import fr.zebasto.spring.post.initialize.PostInitialize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.girchev.springbootjpaexamples.service.*;
-import ru.girchev.springbootjpaexamples.service.UnsyncEmWithTransactions.*;
+import ru.girchev.springbootjpaexamples.domain.chapter8.Garage;
+import ru.girchev.springbootjpaexamples.service.chapter6.*;
+import ru.girchev.springbootjpaexamples.service.chapter6.UnsyncEmWithTransactions.*;
+import ru.girchev.springbootjpaexamples.service.chapter8.Chapter8Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.*;
+import java.util.List;
 
 /**
  * @author Girchev N.A.
@@ -38,6 +43,9 @@ public class MainComponent {
     private Chapter6_4Service2 chapter64Service2;
 
     @Autowired
+    private Chapter8Service chapter8Service;
+
+    @Autowired
     private UserTransaction userTransaction;
 
     @PostInitialize
@@ -49,7 +57,10 @@ public class MainComponent {
             containerManagedPc();
             applicationManagedPc();
 
-
+            chapter8Service.init();
+            chapter8Service.testFetchQuery();
+            chapter8Service.testSingleValuedLazy();
+            chapter8Service.whereTest();
         } catch (Exception e) {
             e.printStackTrace();
         }

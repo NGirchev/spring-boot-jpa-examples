@@ -1,4 +1,4 @@
-package ru.girchev.springbootjpaexamples.service.UnsyncEmWithTransactions;
+package ru.girchev.springbootjpaexamples.service.chapter6;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,31 +15,27 @@ import javax.persistence.*;
  * Date: 11.02.2019
  */
 @Service
-public class Chapter6_1Service2 {
+@Transactional
+public class Chapter6_0Service {
 
+    @PersistenceContext(type = PersistenceContextType.EXTENDED)
     private EntityManager em;
-
-    @PersistenceUnit
-    private EntityManagerFactory emf;
 
     Department dept;
 
     public void initDeparnment() {
-        em = emf.createEntityManager(SynchronizationType.UNSYNCHRONIZED);
         dept = em.find(Department.class, 2L);
-        System.out.println("6.12 contains TRUE=" + em.contains(dept));
+        System.out.println("6.0 contains TRUE=" + em.contains(dept));
     }
 
     public void setNameDep(String newName) {
-        System.out.println("6.12 contains TRUE=" + em.contains(dept));
-        System.out.println("6.12 JOINED FALSE=" + em.isJoinedToTransaction());
-        //Explicitly joining a JTA transaction requires a JTA transaction be currently active
-//        em.joinTransaction();
+        System.out.println("6.0 contains TRUE=" + em.contains(dept));
+        System.out.println("6.0 JOINED TRUE=" + em.isJoinedToTransaction());
         dept.setName(newName);
     }
 
     public void print() {
-        System.out.println("6.12 result=" +
+        System.out.println("6.0 result=" +
                 em.createNativeQuery("select p.name from chapter6.department p where p.id = 2")
                         .getSingleResult());
     }

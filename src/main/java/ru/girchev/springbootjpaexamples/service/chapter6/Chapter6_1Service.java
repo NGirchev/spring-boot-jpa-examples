@@ -1,4 +1,4 @@
-package ru.girchev.springbootjpaexamples.service;
+package ru.girchev.springbootjpaexamples.service.chapter6;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

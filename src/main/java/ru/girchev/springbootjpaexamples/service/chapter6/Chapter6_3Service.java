@@ -1,7 +1,6 @@
-package ru.girchev.springbootjpaexamples.service;
+package ru.girchev.springbootjpaexamples.service.chapter6;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.girchev.springbootjpaexamples.domain.chapter6.Department;
 
 import javax.persistence.EntityManager;
@@ -13,27 +12,26 @@ import javax.persistence.PersistenceContextType;
  * Date: 11.02.2019
  */
 @Service
-@javax.transaction.Transactional
-public class Chapter6_2Service {
+public class Chapter6_3Service {
 
-    @PersistenceContext(type = PersistenceContextType.EXTENDED)
+    @PersistenceContext(type = PersistenceContextType.TRANSACTION)
     private EntityManager em;
 
     Department dept;
 
     public void initDeparnment() {
         dept = em.find(Department.class, 2L);
-        System.out.println("6.2 contains TRUE=" + em.contains(dept));
+        System.out.println("6.3 contains FALSE=" + em.contains(dept));
     }
 
     public void setNameDep(String newName) {
-        System.out.println("6.2 contains TRUE=" + em.contains(dept));
-        System.out.println("6.2 JOINED TRUE=" + em.isJoinedToTransaction());
+        System.out.println("6.3 contains FALSE=" + em.contains(dept));
+        System.out.println("6.3 JOINED TRUE=" + em.isJoinedToTransaction());
         dept.setName(newName);
     }
 
     public void print() {
-        System.out.println("6.2 result=" +
+        System.out.println("6.3 result=" +
                 em.createNativeQuery("select p.name from chapter6.department p where p.id = 2")
                         .getSingleResult());
     }
